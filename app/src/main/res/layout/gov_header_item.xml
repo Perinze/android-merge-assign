@@ -18,13 +18,13 @@
         android:foreground="?android:attr/selectableItemBackground">
 
         <ImageView
-            android:id="@+id/meetingHeaderItemImageView"
+            android:id="@+id/govHeaderItemImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"/>
 
         <TextView
-            android:id="@+id/meetingHeaderItemTextView"
+            android:id="@+id/govHeaderItemTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
