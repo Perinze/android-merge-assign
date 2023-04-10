@@ -8,6 +8,6 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_meeting_header">两会大头条</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_gov_header">政府头条</string>
     <string name="menu_slideshow">Slideshow</string>
 </resources>

@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_meeting_header" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.perinze.merge.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_gov_header"
+        android:name="com.perinze.merge.ui.gov_header.GovHeaderFragment"
+        android:label="@string/menu_gov_header"
+        tools:layout="@layout/fragment_gov_header" />
 
     <fragment
         android:id="@+id/nav_slideshow"
