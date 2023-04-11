@@ -9,5 +9,5 @@
 
     <string name="menu_meeting_header">两会大头条</string>
     <string name="menu_gov_header">政府头条</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_comment">人民留言</string>
 </resources>
