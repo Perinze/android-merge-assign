@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.perinze.merge.R
 
-class GovHeaderAdapter(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<GovHeader>>):
+class GovHeaderAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<GovHeader>>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     init {
@@ -24,7 +24,7 @@ class GovHeaderAdapter(private val context: Context, private val lifecycleOwner:
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val itemView: View = LayoutInflater.from(context).inflate(R.layout.fragment_gov_header, parent, false)
+        val itemView: View = LayoutInflater.from(context).inflate(R.layout.gov_header_item, parent, false)
         return GovHeaderHolder(itemView)
     }
 
