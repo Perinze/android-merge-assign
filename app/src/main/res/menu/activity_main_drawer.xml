@@ -14,8 +14,8 @@
             android:icon="@drawable/ic_menu_gov_header"
             android:title="@string/menu_gov_header" />
         <item
-            android:id="@+id/nav_comment"
+            android:id="@+id/nav_search"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_comment" />
+            android:title="@string/menu_search" />
     </group>
 </menu>

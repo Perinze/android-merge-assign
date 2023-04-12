@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_gov_header" />
 
     <fragment
-        android:id="@+id/nav_comment"
-        android:name="com.perinze.merge.ui.comment.CommentFragment"
-        android:label="@string/menu_comment"
-        tools:layout="@layout/fragment_comment" />
+        android:id="@+id/nav_search"
+        android:name="com.perinze.merge.ui.search.SearchFragment"
+        android:label="@string/menu_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

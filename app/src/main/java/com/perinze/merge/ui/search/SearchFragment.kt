@@ -1,17 +1,16 @@
-package com.perinze.merge.ui.comment
+package com.perinze.merge.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.perinze.merge.databinding.FragmentCommentBinding
+import com.perinze.merge.databinding.FragmentSearchBinding
 
-class CommentFragment : Fragment() {
+class SearchFragment : Fragment() {
 
-    private var _binding: FragmentCommentBinding? = null
+    private var _binding: FragmentSearchBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,9 +22,9 @@ class CommentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val slideshowViewModel =
-            ViewModelProvider(this).get(CommentViewModel::class.java)
+            ViewModelProvider(this).get(SearchViewModel::class.java)
 
-        _binding = FragmentCommentBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
