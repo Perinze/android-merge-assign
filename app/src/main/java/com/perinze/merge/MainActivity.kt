@@ -1,17 +1,22 @@
 package com.perinze.merge
 
+import android.app.SearchManager
+import android.content.ComponentName
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.perinze.merge.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,6 +52,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+
+        // Get the SearchView and set the searchable configuration
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.menu_search).actionView as SearchView).apply {
+            // Assumes current activity is the searchable activity
+            //setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setSearchableInfo(
+                searchManager.getSearchableInfo(
+                    ComponentName(
+                        applicationContext,
+                        SearchActivity::class.java
+                    )
+                )
+            )
+
+            isIconifiedByDefault = false // Do not iconify the widget; expand it by default
+        }
+
         return true
     }
 
