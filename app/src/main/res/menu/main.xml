@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/search_badge"
+        android:id="@+id/menu_search"
         android:icon="?android:attr/actionModeWebSearchDrawable"
-        android:orderInCategory="100"
+        android:orderInCategory="90"
         android:title="@string/search_title"
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.widget.SearchView" />
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="102"
+        android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>
