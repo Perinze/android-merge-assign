@@ -10,6 +10,6 @@
     <string name="menu_meeting_header">两会大头条</string>
     <string name="menu_gov_header">政府头条</string>
     <string name="menu_search">政策查询</string>
-    <string name="search_hint">any hint?</string>
-    <string name="search_title">search_title</string>
+    <string name="search_hint">政策关键词</string>
+    <string name="search_title">政策查询</string>
 </resources>
