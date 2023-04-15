@@ -22,13 +22,13 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchViewModel: SearchViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("search activity", "onCreate")
+        searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+
         setContentView(R.layout.search_result)
         root = findViewById(R.id.search_result_view)
-        Log.d("search activity", "onCreate")
-        handleIntent(intent)
 
-        searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
-        searchViewModel.search("114514")
+        handleIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -41,7 +41,7 @@ class SearchActivity : AppCompatActivity() {
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
                 Log.d("query", query)
-                //root.text = query
+                searchViewModel.search(query)
             }
         }
     }
