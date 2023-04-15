@@ -1,13 +1,15 @@
 package com.perinze.merge.ui.favorite
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.perinze.merge.databinding.FragmentFavoriteBinding
-import com.perinze.merge.ui.search.SearchViewModel
 
 class FavoriteFragment : Fragment() {
 
@@ -17,13 +19,19 @@ class FavoriteFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val searchViewModel =
-            ViewModelProvider(this)[SearchViewModel::class.java]
+        favoriteViewModel =
+            ViewModelProvider(this, FavoriteViewModelFactory(requireActivity()))[FavoriteViewModel::class.java]
+        favoriteViewModel.retrieve()
+
+        Log.d("favorite", "view model create")
 
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
@@ -31,6 +39,14 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = binding.favoriteRecyclerView
+
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerView.layoutManager = linearLayoutManager
+
+        recyclerView.adapter = FavoriteAdapter(requireActivity(), requireActivity(), favoriteViewModel.result)
     }
 
     override fun onDestroyView() {

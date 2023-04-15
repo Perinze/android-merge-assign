@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.perinze.merge.databinding.ActivityMainBinding
+import com.perinze.merge.ui.search.SearchActivity
 
 class MainActivity : AppCompatActivity() {
 
