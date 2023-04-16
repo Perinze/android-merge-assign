@@ -11,8 +11,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.perinze.merge.R
+import com.perinze.merge.ui.favorite.AppDatabase
+import com.perinze.merge.ui.favorite.Favorite
 
-class SearchResultAdapter(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<SearchResult>>):
+class SearchResultAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<SearchResult>>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     init {
@@ -39,6 +41,11 @@ class SearchResultAdapter(private val context: Context, private val lifecycleOwn
         searchResultHolder.itemView.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(liveData.value!![position].link))
             context.startActivity(intent)
+        }
+        searchResultHolder.itemView.setOnLongClickListener {
+            AppDatabase.getInstance(context).favoriteDao()
+                .insertAll(Favorite(0, liveData.value!![position].title, liveData.value!![position].link))
+            true
         }
     }
 

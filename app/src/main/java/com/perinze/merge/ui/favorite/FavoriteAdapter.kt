@@ -6,6 +6,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
@@ -16,6 +17,8 @@ import com.perinze.merge.R
 
 class FavoriteAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<Favorite>>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    val db = AppDatabase.getInstance(context).favoriteDao()
 
     init {
         liveData.observe(lifecycleOwner) {
@@ -34,14 +37,26 @@ class FavoriteAdapter(private val context: Context, lifecycleOwner: LifecycleOwn
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val favoriteHolder = holder as FavoriteHolder
-        favoriteHolder.textView.text = liveData.value!![position].title
+        val favorite = liveData.value!![position]
+        favoriteHolder.textView.text = favorite.title
         favoriteHolder.itemView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(liveData.value!![position].url))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(favorite.url))
             context.startActivity(intent)
+        }
+        if (db.getAllById(favorite.id).isNotEmpty()) {
+            favoriteHolder.mark.isChecked = true
+        }
+        favoriteHolder.mark.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                db.insertAll(favorite)
+            } else {
+                db.deleteById(favorite.id)
+            }
         }
     }
 
     class FavoriteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.favorite_title)
+        val mark: CheckBox = itemView.findViewById(R.id.mark)
     }
 }
