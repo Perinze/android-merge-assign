@@ -8,14 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.perinze.merge.R
+import com.perinze.merge.ui.favorite.AppDatabase
+import com.perinze.merge.ui.favorite.Favorite
 
 class MeetingHeaderAdapter(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<MeetingHeader>>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val db = AppDatabase.getInstance(context).favoriteDao()
 
     init {
         liveData.observe(lifecycleOwner) {
@@ -34,11 +39,23 @@ class MeetingHeaderAdapter(private val context: Context, private val lifecycleOw
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val meetingHeaderHolder = holder as MeetingHeaderHolder
-        meetingHeaderHolder.imageView.load(liveData.value!![position].img)
-        meetingHeaderHolder.textView.text = liveData.value!![position].title
+        val meetingHeader = liveData.value!![position]
+        meetingHeaderHolder.imageView.load(meetingHeader.img)
+        meetingHeaderHolder.textView.text = meetingHeader.title
         meetingHeaderHolder.itemView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(liveData.value!![position].url))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(meetingHeader.url))
             context.startActivity(intent)
+        }
+        meetingHeaderHolder.itemView.setOnLongClickListener {
+            val dbEntity: List<Favorite> = db.getAllByUrl(meetingHeader.url)
+            if (dbEntity.isEmpty()) {
+                db.insertAll(Favorite(0, meetingHeader.title, meetingHeader.url))
+                Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show()
+            } else {
+                db.deleteById(dbEntity[0].id)
+                Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show()
+            }
+            true
         }
     }
 

@@ -55,6 +55,9 @@ interface FavoriteDao {
 
     @Query("DELETE FROM favorite WHERE id = :id")
     fun deleteById(id: Int)
+
+    @Query("SELECT * FROM favorite WHERE url = :url")
+    fun getAllByUrl(url: String): List<Favorite>
 }
 
 @Database(entities = [Favorite::class], version = AppDatabase.VERSION)

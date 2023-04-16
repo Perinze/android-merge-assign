@@ -8,14 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.perinze.merge.R
+import com.perinze.merge.ui.favorite.AppDatabase
+import com.perinze.merge.ui.favorite.Favorite
 
 class GovHeaderAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<GovHeader>>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val db = AppDatabase.getInstance(context).favoriteDao()
 
     init {
         liveData.observe(lifecycleOwner) {
@@ -34,11 +39,23 @@ class GovHeaderAdapter(private val context: Context, lifecycleOwner: LifecycleOw
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val govHeaderHolder = holder as GovHeaderHolder
-        govHeaderHolder.imageView.load(liveData.value!![position].img)
-        govHeaderHolder.textView.text = liveData.value!![position].title
+        val govHeader = liveData.value!![position]
+        govHeaderHolder.imageView.load(govHeader.img)
+        govHeaderHolder.textView.text = govHeader.title
         govHeaderHolder.itemView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(liveData.value!![position].url))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(govHeader.url))
             context.startActivity(intent)
+        }
+        govHeaderHolder.itemView.setOnLongClickListener {
+            val dbEntity: List<Favorite> = db.getAllByUrl(govHeader.url)
+            if (dbEntity.isEmpty()) {
+                db.insertAll(Favorite(0, govHeader.title, govHeader.url))
+                Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show()
+            } else {
+                db.deleteById(dbEntity[0].id)
+                Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show()
+            }
+            true
         }
     }
 

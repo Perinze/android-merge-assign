@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ import com.perinze.merge.R
 class FavoriteAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<Favorite>>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val db = AppDatabase.getInstance(context).favoriteDao()
+    private val db = AppDatabase.getInstance(context).favoriteDao()
 
     init {
         liveData.observe(lifecycleOwner) {
@@ -47,8 +48,10 @@ class FavoriteAdapter(private val context: Context, lifecycleOwner: LifecycleOwn
         favoriteHolder.mark.setOnCheckedChangeListener { _, b ->
             if (b) {
                 db.insertAll(favorite)
+                Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show()
             } else {
                 db.deleteById(favorite.id)
+                Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show()
             }
         }
     }

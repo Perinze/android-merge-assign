@@ -7,15 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.perinze.merge.R
 import com.perinze.merge.ui.favorite.AppDatabase
 import com.perinze.merge.ui.favorite.Favorite
 
 class SearchResultAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<SearchResult>>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    val db = AppDatabase.getInstance(context).favoriteDao()
 
     init {
         liveData.observe(lifecycleOwner) {
@@ -34,17 +37,24 @@ class SearchResultAdapter(private val context: Context, lifecycleOwner: Lifecycl
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val searchResultHolder = holder as SearchResultHolder
-        searchResultHolder.titleView.text = liveData.value!![position].title
-        searchResultHolder.previewView.text = liveData.value!![position].preview
-        searchResultHolder.groupView.text = liveData.value!![position].group
-        searchResultHolder.dateView.text = liveData.value!![position].date
+        val searchResult = liveData.value!![position]
+        searchResultHolder.titleView.text = searchResult.title
+        searchResultHolder.previewView.text = searchResult.preview
+        searchResultHolder.groupView.text = searchResult.group
+        searchResultHolder.dateView.text = searchResult.date
         searchResultHolder.itemView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(liveData.value!![position].link))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(searchResult.link))
             context.startActivity(intent)
         }
         searchResultHolder.itemView.setOnLongClickListener {
-            AppDatabase.getInstance(context).favoriteDao()
-                .insertAll(Favorite(0, liveData.value!![position].title, liveData.value!![position].link))
+            val dbEntity: List<Favorite> = db.getAllByUrl(searchResult.link)
+            if (dbEntity.isEmpty()) {
+                db.insertAll(Favorite(0, searchResult.title, searchResult.link))
+                Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show()
+            } else {
+                db.deleteById(dbEntity[0].id)
+                Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show()
+            }
             true
         }
     }
