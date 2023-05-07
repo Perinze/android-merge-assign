@@ -14,7 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.perinze.merge.R
-import com.perinze.merge.ui.favorite.AppDatabase
+import com.perinze.merge.AppDatabase
 import com.perinze.merge.ui.favorite.Favorite
 
 class MeetingHeaderAdapter(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<MeetingHeader>>):

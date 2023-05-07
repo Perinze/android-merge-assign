@@ -1,16 +1,10 @@
 package com.perinze.merge.ui.favorite
 
-import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.*
-import com.perinze.merge.ui.search.SearchResult
+import com.perinze.merge.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
 
 class FavoriteViewModel(context: Context) : ViewModel() {
 

@@ -12,8 +12,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.perinze.merge.AppDatabase
 import com.perinze.merge.R
-import com.perinze.merge.ui.favorite.AppDatabase
 import com.perinze.merge.ui.favorite.Favorite
 
 class SearchResultAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<SearchResult>>):
