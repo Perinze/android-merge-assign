@@ -44,6 +44,12 @@
             android:label="@string/scan_title"
             android:theme="@style/Theme.Merge.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.article.ArticleActivity"
+            android:exported="true"
+            android:label="@string/article_title"
+            android:theme="@style/Theme.Merge.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

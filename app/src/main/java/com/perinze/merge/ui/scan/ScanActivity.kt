@@ -1,7 +1,9 @@
 package com.perinze.merge.ui.scan
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -73,6 +75,12 @@ class ScanActivity : AppCompatActivity() {
 
                 val qrCodeViewModel = QrCodeViewModel(barcodeResults[0])
                 val qrCodeDrawable = QrCodeDrawable(qrCodeViewModel)
+                qrCodeViewModel.resultCallback = { url ->
+                    val intent = Intent()
+                    intent.data = Uri.parse(url)
+                    setResult(RESULT_OK, intent)
+                    finish()
+                }
 
                 previewView.setOnTouchListener(qrCodeViewModel.qrCodeTouchCallback)
                 previewView.overlay.clear()
@@ -82,26 +90,6 @@ class ScanActivity : AppCompatActivity() {
 
         cameraController.bindToLifecycle(this)
         previewView.controller = cameraController
-    }
-
-    private fun bindPreview(cameraProvider: ProcessCameraProvider) {
-        val preview : Preview = Preview.Builder()
-                .build()
-
-        var cameraSelector : CameraSelector = CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build()
-
-        preview.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
-
-        var camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
-        //try {
-        //    cameraProvider.unbindAll()
-
-        //    cameraProvider.bindToLifecycle(this, cameraSelector, preview)
-        //} catch(exc: Exception) {
-        //    Log.e(TAG, "Use case binding failed", exc)
-        //}
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {

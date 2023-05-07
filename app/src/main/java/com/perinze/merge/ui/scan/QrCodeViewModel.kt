@@ -6,6 +6,7 @@ import android.net.Uri
 import android.view.MotionEvent
 import android.view.View
 import com.google.mlkit.vision.barcode.common.Barcode
+import com.perinze.merge.ui.article.ArticleActivity
 
 /**
  * A ViewModel for encapsulating the data for a QR Code, including the encoded data, the bounding
@@ -17,7 +18,8 @@ import com.google.mlkit.vision.barcode.common.Barcode
 class QrCodeViewModel(barcode: Barcode) {
     var boundingRect: Rect = barcode.boundingBox!!
     var qrContent: String = ""
-    var qrCodeTouchCallback = { v: View, e: MotionEvent -> false} //no-op
+    var qrCodeTouchCallback = { _: View, _: MotionEvent -> false } //no-op
+    var resultCallback = { _: String -> Unit }
 
     init {
         when (barcode.valueType) {
@@ -25,9 +27,13 @@ class QrCodeViewModel(barcode: Barcode) {
                 qrContent = barcode.url!!.url!!
                 qrCodeTouchCallback = { v: View, e: MotionEvent ->
                     if (e.action == MotionEvent.ACTION_DOWN && boundingRect.contains(e.getX().toInt(), e.getY().toInt())) {
-                        val openBrowserIntent = Intent(Intent.ACTION_VIEW)
-                        openBrowserIntent.data = Uri.parse(qrContent)
-                        v.context.startActivity(openBrowserIntent)
+                        //val openBrowserIntent = Intent(Intent.ACTION_VIEW)
+                        //openBrowserIntent.data = Uri.parse(qrContent)
+                        //v.context.startActivity(openBrowserIntent)
+                        //val articleIntent = Intent(v.context, ArticleActivity::class.java)
+                        //articleIntent.putExtra("url", qrContent)
+                        //v.context.startActivity(articleIntent)
+                        resultCallback(qrContent)
                     }
                     true // return true from the callback to signify the event was handled
                 }

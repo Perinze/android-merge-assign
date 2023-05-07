@@ -1,14 +1,17 @@
 package com.perinze.merge
 
+import android.app.Activity
 import android.app.SearchManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -19,6 +22,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.perinze.merge.databinding.ActivityMainBinding
+import com.perinze.merge.ui.article.ArticleActivity
 import com.perinze.merge.ui.scan.ScanActivity
 import com.perinze.merge.ui.search.SearchActivity
 
@@ -26,6 +30,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    private val scanQrCode = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val url = result.data?.data.toString()
+            Log.d("scan qr code result", result.data?.data.toString())
+
+            val articleIntent = Intent(this, ArticleActivity::class.java)
+            articleIntent.putExtra("url", url)
+            startActivity(articleIntent)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +51,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener { view ->
-            val scanIntent = Intent(this, ScanActivity::class.java)
-            startActivity(scanIntent)
+            //val scanIntent = Intent(this, ScanActivity::class.java)
+            //startActivity(scanIntent)
+            scanQrCode.launch(Intent(this, ScanActivity::class.java))
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView

@@ -13,4 +13,5 @@
     <string name="search_hint">政策关键词</string>
     <string name="search_title">政策查询</string>
     <string name="scan_title">扫码</string>
+    <string name="article_title">文章</string>
 </resources>
