@@ -22,4 +22,10 @@
         android:name="com.perinze.merge.ui.favorite.FavoriteFragment"
         android:label="@string/menu_search"
         tools:layout="@layout/fragment_favorite" />
+
+    <activity
+        android:id="@+id/nav_post"
+        android:name="com.perinze.merge.ui.post.PostActivity"
+        android:label="@string/menu_post"
+        tools:layout="@layout/activity_post" />
 </navigation>

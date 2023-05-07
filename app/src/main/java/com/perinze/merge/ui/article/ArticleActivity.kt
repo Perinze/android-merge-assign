@@ -136,8 +136,4 @@ class ArticleActivity : AppCompatActivity() {
         viewBinding.titleTextView.text = title
         viewBinding.bodyTextView.text = body
     }
-
-    private fun hideVideo() {
-
-    }
 }

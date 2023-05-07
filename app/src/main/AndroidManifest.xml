@@ -50,6 +50,11 @@
             android:label="@string/article_title"
             android:theme="@style/Theme.Merge.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.post.PostActivity"
+            android:exported="true"
+            android:label="@string/post_title">
+        </activity>
     </application>
 
 </manifest>
