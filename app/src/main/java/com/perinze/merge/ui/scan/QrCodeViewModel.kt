@@ -27,12 +27,6 @@ class QrCodeViewModel(barcode: Barcode) {
                 qrContent = barcode.url!!.url!!
                 qrCodeTouchCallback = { v: View, e: MotionEvent ->
                     if (e.action == MotionEvent.ACTION_DOWN && boundingRect.contains(e.getX().toInt(), e.getY().toInt())) {
-                        //val openBrowserIntent = Intent(Intent.ACTION_VIEW)
-                        //openBrowserIntent.data = Uri.parse(qrContent)
-                        //v.context.startActivity(openBrowserIntent)
-                        //val articleIntent = Intent(v.context, ArticleActivity::class.java)
-                        //articleIntent.putExtra("url", qrContent)
-                        //v.context.startActivity(articleIntent)
                         resultCallback(qrContent)
                     }
                     true // return true from the callback to signify the event was handled

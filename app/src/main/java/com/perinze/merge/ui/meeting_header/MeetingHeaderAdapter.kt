@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.perinze.merge.R
 import com.perinze.merge.AppDatabase
+import com.perinze.merge.ui.article.ArticleActivity
 import com.perinze.merge.ui.favorite.Favorite
 
 class MeetingHeaderAdapter(private val context: Context, private val lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<MeetingHeader>>):
@@ -43,8 +44,9 @@ class MeetingHeaderAdapter(private val context: Context, private val lifecycleOw
         meetingHeaderHolder.imageView.load(meetingHeader.img)
         meetingHeaderHolder.textView.text = meetingHeader.title
         meetingHeaderHolder.itemView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(meetingHeader.url))
-            context.startActivity(intent)
+            val articleIntent = Intent(context, ArticleActivity::class.java)
+            articleIntent.putExtra("url", meetingHeader.url)
+            context.startActivity(articleIntent)
         }
         meetingHeaderHolder.itemView.setOnLongClickListener {
             val dbEntity: List<Favorite> = db.getAllByUrl(meetingHeader.url)

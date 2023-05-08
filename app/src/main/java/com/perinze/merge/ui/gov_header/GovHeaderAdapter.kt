@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.perinze.merge.R
 import com.perinze.merge.AppDatabase
+import com.perinze.merge.ui.article.ArticleActivity
 import com.perinze.merge.ui.favorite.Favorite
 
 class GovHeaderAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<GovHeader>>):
@@ -43,8 +45,9 @@ class GovHeaderAdapter(private val context: Context, lifecycleOwner: LifecycleOw
         govHeaderHolder.imageView.load(govHeader.img)
         govHeaderHolder.textView.text = govHeader.title
         govHeaderHolder.itemView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(govHeader.url))
-            context.startActivity(intent)
+            val articleIntent = Intent(context, ArticleActivity::class.java)
+            articleIntent.putExtra("url", govHeader.url)
+            context.startActivity(articleIntent)
         }
         govHeaderHolder.itemView.setOnLongClickListener {
             val dbEntity: List<Favorite> = db.getAllByUrl(govHeader.url)

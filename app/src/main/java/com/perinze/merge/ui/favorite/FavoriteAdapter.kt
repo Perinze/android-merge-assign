@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.perinze.merge.AppDatabase
 import com.perinze.merge.R
+import com.perinze.merge.ui.article.ArticleActivity
 
 class FavoriteAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<Favorite>>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -40,8 +41,9 @@ class FavoriteAdapter(private val context: Context, lifecycleOwner: LifecycleOwn
         val favorite = liveData.value!![position]
         favoriteHolder.textView.text = favorite.title
         favoriteHolder.itemView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(favorite.url))
-            context.startActivity(intent)
+            val articleIntent = Intent(context, ArticleActivity::class.java)
+            articleIntent.putExtra("url", favorite.url)
+            context.startActivity(articleIntent)
         }
         if (db.getAllById(favorite.id).isNotEmpty()) {
             favoriteHolder.mark.isChecked = true
