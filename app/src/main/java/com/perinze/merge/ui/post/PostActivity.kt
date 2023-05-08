@@ -1,5 +1,6 @@
 package com.perinze.merge.ui.post
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perinze.merge.databinding.ActivityPostBinding
+import com.perinze.merge.ui.edit.EditActivity
 import com.perinze.merge.ui.favorite.FavoriteAdapter
 
 class PostActivity : AppCompatActivity() {
@@ -35,5 +37,10 @@ class PostActivity : AppCompatActivity() {
         recyclerView.layoutManager = linearLayoutManager
 
         recyclerView.adapter = PostAdapter(this, this, postViewModel.result)
+
+        viewBinding.postFab.setOnClickListener {
+            val intent = Intent(this, EditActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

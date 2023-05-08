@@ -16,4 +16,6 @@
     <string name="article_title">文章</string>
     <string name="menu_post">我的笔记</string>
     <string name="post_title">我的笔记</string>
+    <string name="edit_title">编辑</string>
+    <string name="save_title">保存</string>
 </resources>

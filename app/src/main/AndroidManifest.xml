@@ -55,6 +55,12 @@
             android:exported="true"
             android:label="@string/post_title">
         </activity>
+        <activity
+            android:name=".ui.edit.EditActivity"
+            android:exported="true"
+            android:label="@string/edit_title"
+            android:theme="@style/Theme.Merge.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
