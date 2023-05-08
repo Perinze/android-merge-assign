@@ -40,7 +40,9 @@ class PostAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, 
         val post = liveData.value!![position]
         postHolder.textView.text = post.title
         postHolder.itemView.setOnClickListener {
-            Toast.makeText(context, "implement post viewer", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, RenderActivity::class.java)
+            intent.putExtra("code", post.body)
+            context.startActivity(intent)
         }
 
         val popupMenu = PopupMenu(context, postHolder.itemView)

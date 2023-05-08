@@ -61,6 +61,11 @@
             android:label="@string/edit_title"
             android:theme="@style/Theme.Merge.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.post.RenderActivity"
+            android:exported="true"
+            android:label="@string/render_title">
+        </activity>
     </application>
 
 </manifest>
