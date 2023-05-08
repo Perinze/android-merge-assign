@@ -1,12 +1,9 @@
 package com.perinze.merge.ui.post
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
@@ -40,6 +37,7 @@ class PostAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, 
         val post = liveData.value!![position]
         postHolder.textView.text = post.title
         postHolder.itemView.setOnClickListener {
+            Toast.makeText(context, "title: ${postHolder.textView.text}", Toast.LENGTH_SHORT).show()
             Toast.makeText(context, "implement post viewer", Toast.LENGTH_SHORT).show()
         }
     }

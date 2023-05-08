@@ -50,7 +50,6 @@ class PostActivity : AppCompatActivity() {
                 val name = editText.text.toString()
                 val intent = Intent(this, EditActivity::class.java)
                 intent.putExtra("name", name)
-                Toast.makeText(this, "new name $name", Toast.LENGTH_SHORT).show()
                 startActivity(intent)
             }
             alert.setNegativeButton("取消") { dialog, _ ->

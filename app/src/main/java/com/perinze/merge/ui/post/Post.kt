@@ -14,7 +14,7 @@ import com.perinze.merge.ui.favorite.Favorite
 data class Post(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "title") val title: String?,
-    @ColumnInfo(name = "body") val url: String?,
+    @ColumnInfo(name = "body") val body: String?,
 )
 
 @Dao
