@@ -18,4 +18,6 @@
     <string name="post_title">我的笔记</string>
     <string name="edit_title">编辑</string>
     <string name="save_title">保存</string>
+    <string name="menu_edit_title">编辑</string>
+    <string name="menu_delete_title">删除</string>
 </resources>

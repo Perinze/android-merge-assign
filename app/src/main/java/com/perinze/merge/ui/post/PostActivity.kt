@@ -36,7 +36,7 @@ class PostActivity : AppCompatActivity() {
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = linearLayoutManager
 
-        recyclerView.adapter = PostAdapter(this, this, postViewModel.result)
+        recyclerView.adapter = PostAdapter(this, this, postViewModel.result, postViewModel)
 
         viewBinding.postFab.setOnClickListener {
             val alert = AlertDialog.Builder(this)

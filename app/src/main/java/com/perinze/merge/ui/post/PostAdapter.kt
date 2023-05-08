@@ -1,9 +1,11 @@
 package com.perinze.merge.ui.post
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
@@ -11,8 +13,9 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.perinze.merge.AppDatabase
 import com.perinze.merge.R
+import com.perinze.merge.ui.edit.EditActivity
 
-class PostAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<Post>>):
+class PostAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, private val liveData: LiveData<List<Post>>, private val viewModel: PostViewModel):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val db = AppDatabase.getInstance(context).postDao()
@@ -37,8 +40,33 @@ class PostAdapter(private val context: Context, lifecycleOwner: LifecycleOwner, 
         val post = liveData.value!![position]
         postHolder.textView.text = post.title
         postHolder.itemView.setOnClickListener {
-            Toast.makeText(context, "title: ${postHolder.textView.text}", Toast.LENGTH_SHORT).show()
             Toast.makeText(context, "implement post viewer", Toast.LENGTH_SHORT).show()
+        }
+
+        val popupMenu = PopupMenu(context, postHolder.itemView)
+        popupMenu.inflate(R.menu.post_popup_menu)
+
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_edit -> {
+                    val intent = Intent(context, EditActivity::class.java)
+                    intent.putExtra("id", post.id)
+                    context.startActivity(intent)
+                    true
+                }
+                R.id.menu_delete -> {
+                    viewModel.delete(post.id)
+                    true
+                }
+                else -> {
+                    true
+                }
+            }
+        }
+
+        postHolder.itemView.setOnLongClickListener {
+            popupMenu.show()
+            true
         }
     }
 

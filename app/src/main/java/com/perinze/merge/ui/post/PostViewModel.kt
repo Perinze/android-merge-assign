@@ -20,6 +20,11 @@ class PostViewModel(context: Context) : ViewModel() {
             _result.postValue(db.getAll())
         }
     }
+
+    fun delete(vararg id: Int) {
+        id.forEach { db.deleteById(it) }
+        retrieve()
+    }
 }
 
 class PostViewModelFactory(val context: Context): ViewModelProvider.Factory {

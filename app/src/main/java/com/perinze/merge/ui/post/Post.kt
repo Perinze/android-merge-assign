@@ -8,13 +8,14 @@ import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.RoomDatabase
+import androidx.room.Update
 import com.perinze.merge.ui.favorite.Favorite
 
 @Entity
 data class Post(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "title") val title: String?,
-    @ColumnInfo(name = "body") val body: String?,
+    @ColumnInfo(name = "body") var body: String?,
 )
 
 @Dao
@@ -23,7 +24,7 @@ interface PostDao {
     fun getAll(): List<Post>
 
     @Insert
-    fun insertAll(vararg post: Post)
+    fun insertAll(vararg post: Post): List<Long>
 
     @Query("DELETE FROM post")
     fun deleteAll()
@@ -33,4 +34,7 @@ interface PostDao {
 
     @Query("DELETE FROM post WHERE id = :id")
     fun deleteById(id: Int)
+
+    @Update
+    fun update(vararg post: Post)
 }

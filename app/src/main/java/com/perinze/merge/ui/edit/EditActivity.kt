@@ -1,6 +1,8 @@
 package com.perinze.merge.ui.edit
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.Menu
 import android.widget.Toast
@@ -20,6 +22,7 @@ import com.perinze.merge.ui.post.PostViewModelFactory
 class EditActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityEditBinding
     private lateinit var db: PostDao
+    private var post: Post? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +34,26 @@ class EditActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(this).postDao()
 
-        if (intent.hasExtra("name")) {
-            db.insertAll(Post(0, intent.getStringExtra("name"), ""))
-            Log.d("edit activity", db.getAll().toString())
+        var id: Int? = null
+        if (intent.hasExtra("id")) {
+            id = intent.getIntExtra("id", 0)
+        } else if (intent.hasExtra("name")) {
+            val post = Post(0, intent.getStringExtra("name"), "")
+            id = db.insertAll(post)[0].toInt()
+            Log.d("new id", id.toString())
+        } else {
+            finish()
         }
+        post = db.getAllById(id!!)[0]
+
+        viewBinding.codeEditText.text = SpannableStringBuilder(post?.body)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.edit_menu, menu)
         menu.findItem(R.id.menu_save).setOnMenuItemClickListener {
+            post!!.body = viewBinding.codeEditText.text.toString()
+            db.update(post!!)
             Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show()
             true
         }
