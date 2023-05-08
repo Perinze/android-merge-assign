@@ -2,19 +2,19 @@ package com.perinze.merge.ui.post
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.core.view.marginLeft
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.perinze.merge.R
 import com.perinze.merge.databinding.ActivityPostBinding
 import com.perinze.merge.ui.edit.EditActivity
-import com.perinze.merge.ui.favorite.FavoriteAdapter
 
 class PostActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityPostBinding
@@ -39,8 +39,24 @@ class PostActivity : AppCompatActivity() {
         recyclerView.adapter = PostAdapter(this, this, postViewModel.result)
 
         viewBinding.postFab.setOnClickListener {
-            val intent = Intent(this, EditActivity::class.java)
-            startActivity(intent)
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("新笔记")
+
+            val view = layoutInflater.inflate(R.layout.dialog_post_title, null)
+            val editText: EditText = view.findViewById(R.id.dialog_post_title_edit)
+            alert.setView(view)
+
+            alert.setPositiveButton("确定") { _, _ ->
+                val name = editText.text.toString()
+                val intent = Intent(this, EditActivity::class.java)
+                intent.putExtra("name", name)
+                Toast.makeText(this, "new name $name", Toast.LENGTH_SHORT).show()
+                startActivity(intent)
+            }
+            alert.setNegativeButton("取消") { dialog, _ ->
+                dialog.cancel()
+            }
+            alert.show()
         }
     }
 }
